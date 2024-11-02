@@ -18,3 +18,4 @@ if __name__ == "__main__":
     message = read_message("input.txt")
     create_pdf("hello_world.pdf", message)
     print("PDF generated as 'hello_world.pdf'")
+   
