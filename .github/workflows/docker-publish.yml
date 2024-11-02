@@ -1,13 +1,12 @@
-
-name: Build and Publish Docker Image
+name: Build, Run, and Collect PDF
 
 on:
   push:
     branches:
-      - main  # Triggers workflow on pushes to the main branch
+      - main
 
 jobs:
-  build:
+  build-and-run:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,10 +22,14 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v4
+      - name: Build Docker Image
+        run: docker build -t pdf-generator .
+
+      - name: Run Docker Container and Generate PDF
+        run: docker run --rm -v ${{ github.workspace }}:/app pdf-generator
+
+      - name: Upload PDF as Artifact
+        uses: actions/upload-artifact@v2
         with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/pdf-generator:latest
+          name: hello_world_pdf
+          path: hello_world.pdf
