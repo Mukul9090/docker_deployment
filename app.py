@@ -14,10 +14,7 @@ def read_message(file_path):
         return "No message found in file."
 
 if __name__ == "__main__":
-    print("HEY BENCHOD")
-    exit()
     # Read the message from 'input.txt'
     message = read_message("input.txt")
     create_pdf("hello_world.pdf", message)
     print("PDF generated as 'hello_world.pdf'")
-   
